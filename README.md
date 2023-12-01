@@ -42,8 +42,8 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Progress
 
-| Day                                            | Part 1 | Part 2 |
-| :--------------------------------------------- | :----: | :----: |
-| [Day 1: Trebuchet?!](src/01/summary.md#readme) |        |        |
+| Day                                                 | Part 1 | Part 2 |
+| :-------------------------------------------------- | :----: | :----: |
+| [Day 1: Trebuchet?!](src/days/01/summary.md#readme) |        |        |
 
 <!-- | [Day 1: Calorie Counting](src/01/summary.md#readme)         |   ⭐   |   🌟   | -->

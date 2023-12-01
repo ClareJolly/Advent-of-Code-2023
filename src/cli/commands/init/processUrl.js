@@ -73,7 +73,6 @@ const getTitle = document => {
 const processUrl = async ({ url, day }) => {
   try {
     const { challenge: html, input } = await fetchHtml(url)
-    console.log('  ~ file: processUrl.js:76 ~ processUrl ~ html:', html)
 
     const template = path.join(__dirname, '../../../tmp')
     const dayFolder = String(day).padStart(2, '0')
@@ -112,7 +111,7 @@ const processUrl = async ({ url, day }) => {
       input.replace(/^\s+|\s+$/g, '')
     )
 
-    const indexRow = `| [${title}](src/${dayFolder}/summary.md#readme) |      |      |\n`
+    const indexRow = `| [${title}](src/${dayFolder}/days/summary.md#readme) |      |      |\n`
     fs.appendFileSync(path.join(__dirname, '../../../../README.md'), indexRow)
 
     return {
