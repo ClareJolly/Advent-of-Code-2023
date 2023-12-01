@@ -74,7 +74,7 @@ const processUrl = async ({ url, day }) => {
   try {
     const { challenge: html, input } = await fetchHtml(url)
 
-    const template = path.join(__dirname, '../../../tmp')
+    const template = path.join(__dirname, '../../../days/tmp')
     const dayFolder = String(day).padStart(2, '0')
     const copyTo = path.join(__dirname, '../../../days', dayFolder)
 

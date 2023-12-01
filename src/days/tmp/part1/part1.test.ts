@@ -1,5 +1,5 @@
 import part1 from '.'
-import { getDataForTest } from '../../../test/unit/utils'
+import { getDataForTest } from '../../../../test/unit/utils'
 
 const { testData, realData } = getDataForTest(__dirname)
 

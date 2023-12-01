@@ -6,7 +6,7 @@ const run = async () => {
   const testData = argv.test || argv.t || false
   const realData = argv.real || argv.r || true
   try {
-    const { default: dayFunc } = await import(`./${day}`)
+    const { default: dayFunc } = await import(`./days/${day}`)
     dayFunc({ testData, realData })
   } catch (e) {
     console.error('Error', e)
