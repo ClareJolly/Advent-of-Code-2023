@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { fileToArray } from '../helpers'
+import { fileToArray } from '../../helpers'
 import path from 'path'
 
 import part1 from './part1'
