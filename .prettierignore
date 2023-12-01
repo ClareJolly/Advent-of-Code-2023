@@ -1,0 +1,16 @@
+# Ignore artifacts:
+build
+coverage
+
+# Editor
+.idea
+cdk.out
+
+# Dependency directories
+node_modules
+out
+resources
+dist
+
+# dotenv environment variables file
+.env

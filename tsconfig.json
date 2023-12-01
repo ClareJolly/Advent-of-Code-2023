@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": ["esnext", "dom"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "strict": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "out",
+    "baseUrl": "./",
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node", "jest"],
+    "inlineSourceMap": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "allowJs": true,
+    "jsx": "react"
+  },
+  "include": ["src", "test"],
+  "exclude": ["src/template/**", "node_modules"]
+}

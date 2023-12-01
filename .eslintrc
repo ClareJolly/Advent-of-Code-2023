@@ -1,0 +1,78 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true,
+    "jest": true,
+    "node": true
+  },
+  "parser": "@babel/eslint-parser",
+  "extends": ["plugin:prettier/recommended", "prettier/prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "plugins": ["prettier", "@typescript-eslint", "unused-imports", "node"],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "complexity": [
+      "error",
+      {
+        "max": 5
+      }
+    ],
+    "max-lines": [
+      "error",
+      {
+        "max": 100
+      }
+    ],
+    "no-console": ["warn", { "allow": ["error"] }],
+    "no-alert": "error",
+    "no-new": 0,
+    "consistent-return": "error",
+    "arrow-body-style": ["error", "as-needed"],
+    "arrow-parens": ["error", "as-needed"],
+    "prefer-arrow-callback": [
+      "error",
+      {
+        "allowNamedFunctions": false,
+        "allowUnboundThis": false
+      }
+    ],
+    "no-constant-condition": "error",
+    "prefer-object-spread": "error",
+    "prefer-spread": "error",
+    "prefer-rest-params": "error",
+    "prefer-const": "error",
+    "prefer-reflect": "error",
+    "no-param-reassign": "error",
+    "max-lines-per-function": [
+      "error",
+      {
+        "max": 100,
+        "skipBlankLines": true,
+        "skipComments": true
+      }
+    ],
+    "max-nested-callbacks": ["error", 3],
+    "max-statements": ["error", 20],
+    "max-len": ["error", { "code": 100 }],
+    "prefer-destructuring": "off",
+    "semi": "off",
+    "quotes": ["error", "single", { "avoidEscape": true, "allowTemplateLiterals": false }],
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": ["warn"],
+    "@typescript-eslint/explicit-function-return-type": ["error"],
+    "node/no-missing-import": ["error"],
+    "node/no-unsupported-features/es-syntax": [
+      "error",
+      { "version": ">=14.0.0", "ignores": ["modules"] }
+    ]
+  }
+}
