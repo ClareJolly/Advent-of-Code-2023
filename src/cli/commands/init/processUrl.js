@@ -111,7 +111,7 @@ const processUrl = async ({ url, day }) => {
       input.replace(/^\s+|\s+$/g, '')
     )
 
-    const indexRow = `| [${title}](src/${dayFolder}/days/summary.md#readme) |      |      |\n`
+    const indexRow = `| [${title}](src/days/${dayFolder}/summary.md#readme) |      |      |\n`
     fs.appendFileSync(path.join(__dirname, '../../../../README.md'), indexRow)
 
     return {
