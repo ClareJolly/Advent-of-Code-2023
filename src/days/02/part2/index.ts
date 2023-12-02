@@ -1,5 +1,5 @@
 import parseGames from '../helpers/parseGames'
-import { AvailableColors, Game } from '../types'
+import { AvailableColors, Game, Subset } from '../types'
 
 export type SummaryData = { [key in AvailableColors]: number[] }
 export type MinValuesData = { [key in AvailableColors]: number }
@@ -9,26 +9,36 @@ export interface Summary extends Game {
   power: number
 }
 
+const summarizeSubsets = (subsets: Subset[]): SummaryData => {
+  return subsets.reduce((data, set) => {
+    Object.entries(set).forEach(([color, num]) => {
+      const colorKey = color as AvailableColors
+      if (!data[colorKey]) data[colorKey] = []
+      data[colorKey].push(num)
+    })
+    return data
+  }, {} as SummaryData)
+}
+
+const calculateMinValues = (summary: SummaryData): MinValuesData => {
+  return Object.entries(summary).reduce((acc, [color, numbers]) => {
+    acc[color as AvailableColors] = Math.max(...numbers)
+    return acc
+  }, {} as MinValuesData)
+}
+
+const calculatePower = (minValues: MinValuesData): number => {
+  return Object.values(minValues).reduce((acc, num) => acc * num, 1)
+}
+
 const part2 = (inputData: string[]): number => {
   const games = parseGames(inputData)
   const summary: Summary[] = games.map(game => {
-    const data: SummaryData = {} as SummaryData
-    game.subsets.forEach(set => {
-      Object.entries(set).forEach(([color, num]) => {
-        if (!data[color as AvailableColors]) data[color as AvailableColors] = []
-        data[color as AvailableColors].push(num)
-      })
-    })
-    const minValues = Object.entries(data).reduce((acc, [col, num]) => {
-      acc[col as AvailableColors] = Math.max(...num)
-      return acc
-    }, {} as MinValuesData)
+    const summaryData = summarizeSubsets(game.subsets)
+    const minValues = calculateMinValues(summaryData)
+    const power = calculatePower(minValues)
 
-    const power = Object.values(minValues).reduce((acc, num) => {
-      return acc * num
-    }, 1)
-
-    return { ...game, summary: data, minValues, power }
+    return { ...game, summary: summaryData, minValues, power }
   })
 
   return summary.reduce((acc, game) => {
