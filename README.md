@@ -42,7 +42,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Progress
 
-| Day                                                 | Part 1 | Part 2 |
-| :-------------------------------------------------- | :----: | :----: |
-| [Day 1: Trebuchet?!](src/days/01/summary.md#readme) |   ⭐   |   🌟   |
-| [Day 2: Cube Conundrum](src/02/days/summary.md#readme) |      |      |
+| Day                                                    | Part 1 | Part 2 |
+| :----------------------------------------------------- | :----: | :----: |
+| [Day 1: Trebuchet?!](src/days/01/summary.md#readme)    |   ⭐   |   🌟   |
+| [Day 2: Cube Conundrum](src/02/days/summary.md#readme) |   ⭐   |        |
