@@ -1,32 +1,35 @@
-const AVAILABLE_CUBES: { [key: string]: number } = {
+import parseGames from '../helpers/parseGames'
+import { Subset, AvailableColors, Game } from '../types'
+
+export type AvailableCubes = { [key in AvailableColors]: number }
+
+const AVAILABLE_CUBES: AvailableCubes = {
   red: 12,
   green: 13,
   blue: 14,
 }
-const part1 = (inputData: string[]): number => {
-  const games = inputData.map(d => {
-    const [game, details] = d.split(': ')
-    const gm = game.replace('Game ', '')
-    const subsets = details.split('; ').map(s => {
-      const sets = s.split(', ')
-      const final = sets
-        .map(ss => ss.split(' '))
-        .reduce((acc, [num, color]) => {
-          acc[color] = Number(num)
-          return acc
-        }, {} as { [key: string]: number })
-      return final
-    })
-    return { game: gm, subsets }
-  })
 
-  const possible = games.filter(g => {
-    return g.subsets.every(s => {
-      return Object.entries(s).every(([color, num]) => {
-        return num <= AVAILABLE_CUBES[color]
-      })
-    })
-  })
+const isValidSubset = (
+  subset: Subset,
+  availableCubes: { [key in AvailableColors]: number },
+): boolean => {
+  return Object.entries(subset).every(
+    ([color, num]) => num <= availableCubes[color as AvailableColors],
+  )
+}
+
+const isSubsetValidForGame = (
+  game: Game,
+  availableCubes: { [key in AvailableColors]: number },
+): boolean => {
+  return game.subsets.every(subset => isValidSubset(subset, availableCubes))
+}
+
+const part1 = (inputData: string[]): number => {
+  const games = parseGames(inputData)
+
+  const possible = games.filter(game => isSubsetValidForGame(game, AVAILABLE_CUBES))
+
   return possible.reduce((acc, { game }) => acc + Number(game), 0)
 }
 
