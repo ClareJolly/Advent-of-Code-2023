@@ -46,4 +46,4 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | :----------------------------------------------------- | :----: | :----: |
 | [Day 1: Trebuchet?!](src/days/01/summary.md#readme)    |   ⭐   |   🌟   |
 | [Day 2: Cube Conundrum](src/days/02/summary.md#readme) |   ⭐   |   🌟   |
-| [Day 3: Gear Ratios](src/days/03/summary.md#readme)    |   ⭐   |        |
+| [Day 3: Gear Ratios](src/days/03/summary.md#readme)    |   ⭐   |   🌟   |
