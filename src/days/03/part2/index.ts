@@ -44,16 +44,13 @@ const part2 = (inputData: string[]): number => {
     }),
   )
 
-  const gears = asterisks.map(a => {
+  const gears = asterisks.map(asterisk => {
     const matchIndex: number[] = []
-    a.adjCoOrds.forEach(adjC => {
+    asterisk.adjCoOrds.forEach(coord => {
       completeNumbers.forEach((c, i) => {
-        if (
-          c.coOrds.filter(b => {
-            return b.y === adjC.y && b.x === adjC.x
-          }).length
-        )
+        if (c.coOrds.some(b => b.y === coord.y && b.x === coord.x)) {
           matchIndex.push(i)
+        }
       })
     })
 
@@ -62,17 +59,15 @@ const part2 = (inputData: string[]): number => {
   })
 
   const numbers = gears
-    .filter(g => g?.length === 2)
-    .map(g => {
-      if (g?.length === 2) {
-        return g?.map(gg => completeNumbers[gg])
+    .filter(gear => gear?.length === 2)
+    .map(gear => {
+      if (gear?.length === 2) {
+        return gear?.map(gearPartNum => completeNumbers[gearPartNum])
       }
       return
     })
 
-  return numbers.reduce((acc, num) => {
-    return acc + num!.reduce((acc2, n) => acc2 * n.num, 1)
-  }, 0)
+  return numbers.reduce((a, gear) => a + gear!.reduce((b, { num }) => b * num, 1), 0)
 }
 
 export default part2
