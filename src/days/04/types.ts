@@ -6,4 +6,5 @@ export interface BasicCard {
 }
 export interface Card extends BasicCard {
   score: number
+  processed?: boolean
 }
