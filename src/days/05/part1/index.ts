@@ -1,52 +1,44 @@
 import { batchByBlankLines } from '../../../helpers'
+import { FormattedData, Stages, MapSummary, Summary } from '../types'
 
 const STAGES = ['soil', 'fertilizer', 'water', 'light', 'temperature', 'humidity', 'location']
 
-type Stages = typeof STAGES[number]
-type AllStages = Stages | 'seed'
-
-interface MapSummary {
-  sourceStart: number
-  sourceEnd: number
-  destinationStart: number
-  destinationEnd: number
-}
-
-interface AlmanacDetail {
-  from: Stages
-  to: Stages
-  mapData: number[]
-  mapSummary: MapSummary[]
-  name: string
-}
-export type FormattedData = {
-  [key in Stages]: AlmanacDetail
-}
-
 interface GetStageDetails {
-  formatted: FormattedData
+  almanacData: FormattedData
   value: number
   stage?: Stages | 'seed'
   existing?: { [key in Stages]: number }
 }
 
-type Summary = { [key in AllStages]: number }
+const getNextStage = (currentStage: string): string => {
+  const currentStageIndex = STAGES.findIndex(s => s === currentStage) || 0
+  return STAGES[currentStageIndex + 1]
+}
 
-const getStageDetails = ({ formatted, value, stage = 'soil', existing = {} }: GetStageDetails) => {
+const calculateFinalValue = (mapSummary: MapSummary[], value: number): number => {
+  const matchingDataSet = mapSummary.findIndex(m => value >= m.sourceStart && value <= m.sourceEnd)
+  const valueToAdd = value - (mapSummary[matchingDataSet]?.sourceStart || 0)
+  const dest = (mapSummary[matchingDataSet]?.destinationStart || 0) + valueToAdd
+  return dest || value
+}
+
+const getStageDetails = ({
+  almanacData,
+  value,
+  stage = 'soil',
+  existing = {},
+}: GetStageDetails): any => {
   let output = { ...existing }
-  const currentStageIndex = STAGES.findIndex(s => s === stage) || 0
-  const nextStage = STAGES[currentStageIndex + 1]
 
-  const mapSummary = formatted[stage].mapSummary
-  const matchingDataSet = mapSummary.findIndex(m => value >= m.sourceStart && value <= m.sourceEnd) //m.mapDetail.find(detail => detail.s === value))
-  const valueToAdd = value - mapSummary[matchingDataSet]?.sourceStart
-  const dest = mapSummary[matchingDataSet]?.destinationStart + valueToAdd
-  const final = dest || value
+  const nextStage = getNextStage(stage)
+  const mapSummary = almanacData[stage]?.mapSummary || []
 
+  const final = calculateFinalValue(mapSummary, value)
   output[stage] = final
+
   if (stage !== 'location') {
     const stageResult = getStageDetails({
-      formatted,
+      almanacData,
       value: final,
       stage: nextStage,
       existing: output,
@@ -56,55 +48,62 @@ const getStageDetails = ({ formatted, value, stage = 'soil', existing = {} }: Ge
   } else {
     return output
   }
+
   return output
+}
+
+const extractSeeds = (inputData: string[]): number[] => {
+  return inputData.slice(0, 1)[0].split(': ')[1].split(' ').map(Number)
+}
+
+const parseAlmanacData = (data: string[][]): string[][] => {
+  return data.slice(1)
+}
+
+const formatAlmanacData = (almanacData: string[][]): FormattedData => {
+  return almanacData.reduce((acc: FormattedData, line: string[]) => {
+    const [key, ...rest] = line
+    const regex = /^(.*)-to-(.*) map:$/
+    const matchResult = key.match(regex)
+
+    if (matchResult) {
+      const from = matchResult[1]
+      const to = matchResult[2]
+
+      const mapData = rest.map(r => r.split(' ').map(Number))
+      const mapSummary = mapData.map(([destinationRangeStart, sourceRangeStart, rangeLength]) => ({
+        destinationRangeStart,
+        sourceRangeStart,
+        rangeLength,
+        sourceStart: sourceRangeStart,
+        sourceEnd: sourceRangeStart + rangeLength - 1,
+        destinationStart: destinationRangeStart,
+        destinationEnd: destinationRangeStart + rangeLength - 1,
+      }))
+
+      acc[to] = {
+        from,
+        to,
+        mapData: mapData,
+        mapSummary,
+        name: key.replace(':', ''),
+      }
+    }
+
+    return acc
+  }, {} as FormattedData)
 }
 
 const part1 = (inputData: string[]): number => {
   const data = batchByBlankLines(inputData)
-  const seeds = inputData.slice(0, 1).map(d =>
-    d
-      .split(': ')[1]
-      .split(' ')
-      .map(n => Number(n)),
-  )[0]
-  const almanacData = data.slice(1, data.length)
+  const seeds = extractSeeds(inputData)
+  const roughAlmanacData = parseAlmanacData(data)
 
-  const formatted: FormattedData = almanacData.reduce((acc, line) => {
-    const [key, ...rest] = line
-    const regex = /^(.*)-to-(.*) map:$/
-
-    const matchResult = key.match(regex)
-
-    const from = matchResult![1]
-    const to = matchResult![2]
-
-    const mapData = rest.map(r => r.split(' ').map(m => Number(m)))
-    const mapSummary = mapData.map(m => ({
-      destinationRangeStart: m[0],
-      sourceRangeStart: m[1],
-      rangeLength: m[2],
-    }))
-    acc[to as Stages] = {
-      from,
-      to,
-      map: mapData,
-      mapSummary: mapSummary.map(m => {
-        return {
-          ...m,
-          sourceStart: m.sourceRangeStart,
-          sourceEnd: m.sourceRangeStart + m.rangeLength - 1,
-          destinationStart: m.destinationRangeStart,
-          destinationEnd: m.destinationRangeStart + m.rangeLength - 1,
-        }
-      }),
-      name: key.replace(':', ''),
-    }
-    return acc
-  }, {} as { [key in Stages]: any })
+  const almanacData: FormattedData = formatAlmanacData(roughAlmanacData)
 
   const seedsWithSteps: Summary[] = seeds.map(seed => {
     let output: Summary = { seed }
-    const result = getStageDetails({ formatted, value: seed })
+    const result = getStageDetails({ almanacData, value: seed })
     return { ...output, ...result }
   })
 
