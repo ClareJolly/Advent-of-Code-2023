@@ -42,10 +42,10 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 
 ## Progress
 
-| Day                                                    | Part 1 | Part 2 |
-| :----------------------------------------------------- | :----: | :----: |
-| [Day 1: Trebuchet?!](src/days/01/summary.md#readme)    |   ⭐   |   🌟   |
-| [Day 2: Cube Conundrum](src/days/02/summary.md#readme) |   ⭐   |   🌟   |
-| [Day 3: Gear Ratios](src/days/03/summary.md#readme)    |   ⭐   |   🌟   |
-| [Day 4: Scratchcards](src/days/04/summary.md#readme)   |   ⭐   |   🌟   |
-| [Day 5: If You Give A Seed A Fertilizer](src/days/05/summary.md#readme) |      |      |
+| Day                                                                     | Part 1 | Part 2 |
+| :---------------------------------------------------------------------- | :----: | :----: |
+| [Day 1: Trebuchet?!](src/days/01/summary.md#readme)                     |   ⭐   |   🌟   |
+| [Day 2: Cube Conundrum](src/days/02/summary.md#readme)                  |   ⭐   |   🌟   |
+| [Day 3: Gear Ratios](src/days/03/summary.md#readme)                     |   ⭐   |   🌟   |
+| [Day 4: Scratchcards](src/days/04/summary.md#readme)                    |   ⭐   |   🌟   |
+| [Day 5: If You Give A Seed A Fertilizer](src/days/05/summary.md#readme) |   ⭐   |        |

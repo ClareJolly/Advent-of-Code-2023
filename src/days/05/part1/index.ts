@@ -2,22 +2,14 @@ import { batchByBlankLines } from '../../../helpers'
 
 const STAGES = ['soil', 'fertilizer', 'water', 'light', 'temperature', 'humidity', 'location']
 
-// export type Stages =
-//   | 'soil'
-//   | 'fertilizer'
-//   | 'water'
-//   | 'light'
-//   | 'temperature'
-//   | 'humidity'
-//   | 'location'
-
 type Stages = typeof STAGES[number]
 type AllStages = Stages | 'seed'
 
 interface MapSummary {
-  sourceRangeList: number[]
-  destinationRangeList: number[]
-  mapDetail: { d: number; s: number }[]
+  sourceStart: number
+  sourceEnd: number
+  destinationStart: number
+  destinationEnd: number
 }
 
 interface AlmanacDetail {
@@ -46,9 +38,11 @@ const getStageDetails = ({ formatted, value, stage = 'soil', existing = {} }: Ge
   const nextStage = STAGES[currentStageIndex + 1]
 
   const mapSummary = formatted[stage].mapSummary
-  const next = mapSummary.find(m => m.mapDetail.find(detail => detail.s === value))
-  const nextNext = next?.mapDetail.find(detail => detail.s === value).d
-  const final = nextNext || value
+  const matchingDataSet = mapSummary.findIndex(m => value >= m.sourceStart && value <= m.sourceEnd) //m.mapDetail.find(detail => detail.s === value))
+  const valueToAdd = value - mapSummary[matchingDataSet]?.sourceStart
+  const dest = mapSummary[matchingDataSet]?.destinationStart + valueToAdd
+  const final = dest || value
+
   output[stage] = final
   if (stage !== 'location') {
     const stageResult = getStageDetails({
@@ -77,12 +71,12 @@ const part1 = (inputData: string[]): number => {
 
   const formatted: FormattedData = almanacData.reduce((acc, line) => {
     const [key, ...rest] = line
-    const regex = /^(.*)-to-(.*) map:$/ // Regex pattern to match 'word1-to-word2 map'
+    const regex = /^(.*)-to-(.*) map:$/
 
     const matchResult = key.match(regex)
 
-    const from = matchResult![1] // Extract the first word ('fertilizer')
-    const to = matchResult![2] // Extract the second word ('water')
+    const from = matchResult![1]
+    const to = matchResult![2]
 
     const mapData = rest.map(r => r.split(' ').map(m => Number(m)))
     const mapSummary = mapData.map(m => ({
@@ -95,24 +89,12 @@ const part1 = (inputData: string[]): number => {
       to,
       map: mapData,
       mapSummary: mapSummary.map(m => {
-        let destinationRangeList = [m.destinationRangeStart]
-        let sourceRangeList = [m.sourceRangeStart]
-        for (let i = 1; i < m.rangeLength; i++) {
-          destinationRangeList.push(m.destinationRangeStart + i)
-          sourceRangeList.push(m.sourceRangeStart + i)
-        }
-        const detail = sourceRangeList.map((s, i) => {
-          return {
-            s: s,
-            d: destinationRangeList[i],
-          }
-        })
-
         return {
           ...m,
-          sourceRangeList,
-          destinationRangeList,
-          mapDetail: detail,
+          sourceStart: m.sourceRangeStart,
+          sourceEnd: m.sourceRangeStart + m.rangeLength - 1,
+          destinationStart: m.destinationRangeStart,
+          destinationEnd: m.destinationRangeStart + m.rangeLength - 1,
         }
       }),
       name: key.replace(':', ''),
