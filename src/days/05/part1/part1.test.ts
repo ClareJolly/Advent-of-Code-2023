@@ -7,7 +7,7 @@ describe('part1', () => {
   it('returns the expected answer with test data', () => {
     const result = part1(testData[0])
 
-    expect(result).toStrictEqual()
+    expect(result).toStrictEqual(35)
   })
 
   it('returns the expected answer with real data', () => {
