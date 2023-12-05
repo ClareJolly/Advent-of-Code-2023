@@ -132,7 +132,3 @@ Consider all of the initial seed numbers listed in the ranges on the first line 
 [Solution Part 2](./part2/index.ts)
 
 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄
-
-```
-
-```
