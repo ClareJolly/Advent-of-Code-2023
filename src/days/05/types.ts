@@ -8,6 +8,7 @@ export interface MapSummary {
   sourceEnd: number
   destinationStart: number
   destinationEnd: number
+  rangeLength: number
 }
 
 export interface AlmanacDetail {
