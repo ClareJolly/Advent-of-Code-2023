@@ -49,3 +49,4 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 3: Gear Ratios](src/days/03/summary.md#readme)                     |   ⭐   |   🌟   |
 | [Day 4: Scratchcards](src/days/04/summary.md#readme)                    |   ⭐   |   🌟   |
 | [Day 5: If You Give A Seed A Fertilizer](src/days/05/summary.md#readme) |   ⭐   |        |
+| [Day 6: Wait For It](src/days/06/summary.md#readme) |      |      |
