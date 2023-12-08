@@ -6,6 +6,7 @@ export interface Hand {
 export interface HandType {
   name: string
   fn: (arg: Hand) => boolean
+  fnWithJokers?: (arg: Hand) => boolean
 }
 
 export interface HandWithResults extends Hand {

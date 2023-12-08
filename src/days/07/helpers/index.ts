@@ -1,6 +1,21 @@
 import { Hand, HandType, HandWithResults } from '../types'
 
 export const CARD_ORDER = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
+export const CARD_ORDER_WITH_JOKERS = [
+  'A',
+  'K',
+  'Q',
+  'T',
+  '9',
+  '8',
+  '7',
+  '6',
+  '5',
+  '4',
+  '3',
+  '2',
+  'J',
+]
 
 type CardType = typeof CARD_ORDER[number]
 
@@ -42,7 +57,8 @@ export const HAND_TYPES: HandType[] = [
   { name: 'High card', fn: highCard },
 ]
 
-export const getCardStrength = (card: CardType): number => CARD_ORDER.indexOf(card)
+export const getCardStrength = (card: CardType, withJokers: boolean = false): number =>
+  withJokers ? CARD_ORDER_WITH_JOKERS.indexOf(card) : CARD_ORDER.indexOf(card)
 
 export const compareHands = (handA: HandWithResults, handB: HandWithResults) => {
   const typeA = handA.type
