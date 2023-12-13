@@ -54,3 +54,6 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 8: Haunted Wasteland](src/days/08/summary.md#readme)               |   ⭐   |        |
 | [Day 9: Mirage Maintenance](src/days/09/summary.md#readme)              |   ⭐   |        |
 | [Day 10: Pipe Maze](src/days/10/summary.md#readme) |      |      |
+| [Day 11: Cosmic Expansion](src/days/11/summary.md#readme) |      |      |
+| [Day 12: Hot Springs](src/days/12/summary.md#readme) |      |      |
+| [Day 13: Point of Incidence](src/days/13/summary.md#readme) |      |      |
