@@ -57,3 +57,4 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | [Day 11: Cosmic Expansion](src/days/11/summary.md#readme) |      |      |
 | [Day 12: Hot Springs](src/days/12/summary.md#readme) |      |      |
 | [Day 13: Point of Incidence](src/days/13/summary.md#readme) |      |      |
+| [Day 14: Parabolic Reflector Dish](src/days/14/summary.md#readme) |      |      |
